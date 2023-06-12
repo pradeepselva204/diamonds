@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import DiamondComponent from './Components/DiamondComponent'
 import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import About from './Components/About'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -13,6 +14,7 @@ function App() {
             <Routes>
               <Route path='/:id' element={<DiamondComponent />} />
               <Route path='/' element={<DiamondComponent />} />
+              <Route path='/about' element={<About/>} />
             </Routes>
         </Router>
     </>
