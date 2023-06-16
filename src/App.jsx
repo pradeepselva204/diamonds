@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import DiamondComponent from './Components/DiamondComponent'
-import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {HashRouter as Router, Route, Routes } from 'react-router-dom';
 import About from './Components/About'
 function App() {
   const [count, setCount] = useState(0)
