@@ -19,6 +19,8 @@ import { RGBELoader } from 'three-stdlib'
 import Diamonds from './Diamonds'
 import {useParams} from 'react-router-dom';
 import Data from './Data'
+import { Human } from './Human'
+import { HumanFBX } from './Humanfbx'
 const DiamondComponent = () => {
   let params = useParams().id
   if (params ==undefined) {
@@ -29,6 +31,8 @@ const DiamondComponent = () => {
   return (
     <>
         <div className='canvasmodel'>
+        {/* camera={{ position: [-6.209280943197924, -2.419652943042318, -0.028353440371339824], fov: 45, rotation:[1.6906878582880733,-1.2300716727508472,1.6979241608615683] }} */}
+        {/* camera={{ position: [0.12071434843854326, 5.8318366303089477, 9.501849397396124], fov: 45, rotation:[-0.2835008290720362, 0.1294232952762892, 0.008570985166165508] }} */}
             <Canvas dpr={[1, 1.5]} shadows performance={{min:0.5}} camera={{ position: [-6.209280943197924, -2.419652943042318, -0.028353440371339824], fov: 45, rotation:[1.6906878582880733,-1.2300716727508472,1.6979241608615683] }}>
             <color attach="background" args={["#000"]} />
             <ambientLight intensity={0.5} />
@@ -36,6 +40,8 @@ const DiamondComponent = () => {
             <pointLight position={[-10, -10, -10]} />          
             {/* <Float> */}
                 <Diamonds id={params}/>
+                {/* <Human/> */}
+                {/* <HumanFBX/> */}
             {/* <Diamonds/> */}
                 {/* <CameraRig>
                 

@@ -103,14 +103,22 @@ const Diamonds = (props) => {
         })
         model.current.instanceMatrix.needsUpdate = true
         })
-        const config = useControls({
-        bounces: { value: 3, min: 0, max: 8, step: 1 },
-        aberrationStrength: { value: 0.01, min: 0, max: 0.1, step: 0.01 },
-        ior: { value: 2.75, min: 0, max: 10 },
-        fresnel: { value: 1, min: 0, max: 1 },
-        color: '#fff',
-        fastChroma: true
-        })
+        // const config = useControls({
+        // bounces: { value: 3, min: 0, max: 8, step: 1 },
+        // aberrationStrength: { value: 0.01, min: 0, max: 0.1, step: 0.01 },
+        // ior: { value: 2.75, min: 0, max: 10 },
+        // fresnel: { value: 1, min: 0, max: 1 },
+        // color: '#fff',
+        // fastChroma: true
+        // })
+        const config = {
+          bounces: 3,
+          aberrationStrength: 0.01,
+          ior: 2.75,
+          fresnel: 1,
+          color: '#fff',
+          fastChroma: true
+          }
     const texture = useLoader(RGBELoader, 'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr')
     
   return (
