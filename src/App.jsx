@@ -5,6 +5,7 @@ import './App.css'
 import DiamondComponent from './Components/DiamondComponent'
 import {HashRouter as Router, Route, Routes } from 'react-router-dom';
 import About from './Components/About'
+import ShirtComponent from './Components/ShirtComponent'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -15,6 +16,7 @@ function App() {
               <Route path='/:id' element={<DiamondComponent />} />
               <Route path='/' element={<DiamondComponent />} />
               <Route path='/about' element={<About/>} />
+              <Route path='/shirt' element={<ShirtComponent/>} />
             </Routes>
         </Router>
     </>

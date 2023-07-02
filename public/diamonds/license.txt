@@ -1,0 +1,8 @@
+Model Information:
+* title:	Diamonds cuts Collection.
+* source:	https://sketchfab.com/3d-models/diamonds-cuts-collection-2d4bc262e1c24c3097dc20d4e2b0e2c5
+* author:	Frank Rennau (https://sketchfab.com/rennau)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

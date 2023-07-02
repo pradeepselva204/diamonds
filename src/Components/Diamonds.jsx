@@ -8,11 +8,14 @@ import { useControls } from 'leva'
 import {dampC} from 'maath/easing'
 import { EffectComposer, Bloom, DepthOfField } from "@react-three/postprocessing"
 import Data from './Data'
+import { InstancedMesh, InstancedBufferGeometry, BufferAttribute } from 'three';
 const Diamonds = (props) => {
   console.log(props)
   const [diamondColor,setDiamondColor] = useState("#fff")
   const [grow,setGrow] = useState(false)
   const [id,setId] = useState()
+  
+
   const changeColor = (e) =>{
     // console.log(mesh)
     if(e===0&&e!==undefined){
@@ -27,12 +30,16 @@ const Diamonds = (props) => {
     setId(undefined)
   }
   const scaleDiamond = () =>{
+    console.log("Here")
+    setId()
     setGrow(true)
   }
     const { viewport, clock } = useThree()
     const model = useRef()
     const mesh = useRef()
     const { nodes } = useGLTF('/Model/dflat.glb')
+    const instancedGeometry = new InstancedBufferGeometry().copy(nodes.Diamond_1_0.geometry);
+
     // console.log(nodes)
     const tempColor = new THREE.Color()
     // Create random position data
@@ -87,6 +94,10 @@ const Diamonds = (props) => {
         () => diamondArray,
         []
         )
+    const instanceCount = diamonds.length;
+    instancedGeometry.instanceCount = instanceCount;
+    const colors = new Float32Array(instanceCount * 3);
+
         // console.log(diamondArray)
     useFrame((state, delta) => {
         // Update instanced diamonds
@@ -96,8 +107,14 @@ const Diamonds = (props) => {
             dummy.position.set(position[0], position[1], position[2])
             dummy.rotation.set(rotation[0] , rotation[1], rotation[2])
             dummy.scale.setScalar( id === i ? scale : size)
-            dummy.updateMatrix()
-            
+            dummy.updateMatrix()            
+            const colorOffset = i * 3;
+            const color = data.colors;
+            colors[colorOffset] = ((color >> 16) & 255) / 255;
+            colors[colorOffset + 1] = ((color >> 8) & 255) / 255;
+            colors[colorOffset + 2] = (color & 255) / 255;
+            instancedGeometry.setAttribute('color', new BufferAttribute(colors, 3));
+      
             model.current.setMatrixAt(i, dummy.matrix)
             // console.log(model)
         })
@@ -116,16 +133,18 @@ const Diamonds = (props) => {
           aberrationStrength: 0.01,
           ior: 2.75,
           fresnel: 1,
-          color: '#fff',
+          // color: '#fff',
           fastChroma: true
           }
+    // let colors =["0xff0000", "0x00ff00", "0x0000ff","0xffff00", "0xff00ff", "0x00ffff","0xffff00", "0xff00ff", "0x00ffff"]
     const texture = useLoader(RGBELoader, 'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr')
     
   return (
     <CubeCamera resolution={256} frames={1} envMap={texture}>
       {(texture) => (
-        <instancedMesh ref={model} args={[nodes.Diamond_1_0.geometry, null, diamonds.length]} >
-          <MeshRefractionMaterial envMap={texture} toneMapped={false} {...config}/>
+        //  args={[nodes.Diamond_1_0.geometry, null, diamonds.length]}
+        <instancedMesh ref={model} args={[instancedGeometry, null, instanceCount]} onPointerMove={scaleDiamond} >
+          <MeshRefractionMaterial envMap={texture} toneMapped={false} {...config} />
         </instancedMesh>
       )}
     </CubeCamera>
