@@ -1,5 +1,6 @@
-import React,{useLayoutEffect} from 'react'
+import React,{useLayoutEffect, useRef} from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import * as THREE from 'three'
 import {
   useGLTF,
   Caustics,
@@ -15,9 +16,11 @@ import {
   Center,
   Backdrop,
   AsciiRenderer,
-  Line
+  Line,
+  QuadraticBezierLine
 } from '@react-three/drei'
-import { Gradient } from '../../public/lib/Gradient'
+
+// import { Gradient } from '../../public/lib/Gradient'
 import { EffectComposer, Bloom, DepthOfField, Glitch, Noise, Vignette } from '@react-three/postprocessing'
 import { useControls } from 'leva'
 import { RGBELoader } from 'three-stdlib'
@@ -39,12 +42,23 @@ import { Diamond9 } from './Diamond9'
 import { Diamond10 } from './Diamond10'
 import { Diamond11 } from './Diamond11'
 import { HumanModel } from './Humantest'
+import { Gloves } from '../../public/Model/Gloves'
+import { Glass } from '../../public/Model/Glass'
+import { Men } from '../../public/Model/Men'
+import { Hat } from '../../public/Model/Hat'
+import { MenModel } from '../../public/Model/Menmodel'
+import { Mask21 } from '../../public/Model/Floating/Mask21'
+import { Glass08 } from '../../public/Model/Floating/Glass08'
+import { GlovesLeft } from '../../public/Model/Floating/GlovesLeft'
+import { GlovesRight } from '../../public/Model/Floating/GlovesRight'
 // import { Effects } from './Effects'
+import {LeftShoe} from '../../public/Model/Floating/LeftShoe'
+// import {RightShoe} from '../../public/Model/Floating/ShoeRight'
+import { Diamond } from '../../public/Model/Floating/Diamond'
+
 const DiamondComponent = () => {
-  useLayoutEffect(() => {
-    const gradient = new Gradient()
-    gradient.initGradient('#gradient-canvas')
-  }, [])
+  const mask = useRef()
+  const diamond = useRef()
   let params = useParams().id
   if (params ==undefined) {
     params = 0
@@ -57,6 +71,7 @@ const DiamondComponent = () => {
       state.camera.lookAt(-6.209280943197924,  -2.419652943042318, -0.028353440371339824)
     })
   }
+
   return (
     <>
         {/* <canvas id="gradient-canvas" data-transition-in /> */}
@@ -67,18 +82,30 @@ const DiamondComponent = () => {
               {/* <AsciiRenderer fgColor="white" bgColor="transparent" /> */}
               {/* <Effects/> */}
             {/* <Rig from={-Math.PI / 2} to={Math.PI / 2.66} /> */}
-            <fog attach="fog" args={['red', 150, 150]} />
-            <color attach="background" args={["#000"]} />
-            <ambientLight intensity={0.5} />
-            <spotLight position={[5, 5, -10]} angle={0.15} penumbra={1} />
+            {/* <fog attach="fog" args={['red', 150, 150]} /> */}
+            <color attach="background" args={["#392222"]} />
+            <ambientLight intensity={.1} />
+            {/* <spotLight position={[5, 5, -10]} angle={0.15} penumbra={1} /> */}
             {/* <Backdrop castShadow floor={2} position={[0, -0.5, -3]} scale={[50, 10, 4]}>
               <meshStandardMaterial color="#353540" envMapIntensity={0.1} />
             </Backdrop> */}
             <pointLight position={[-10, -10, -10]} />          
             {/* <Float> */}
                 {/* <Diamonds id={params}/> */}
-                <Stage intensity={0.5} environment="city" shadows={{ type: 'accumulative', bias: -0.001 }} adjustCamera={false}>
-                  <Diamond8 id={params}/>
+                <Stage intensity={0.00005} environment="city" shadows={{ type: 'accumulative', bias: -0.001 }} adjustCamera={false}>
+                  {/* <Diamond8 id={params}/> */}
+                  {/* <Hat/> */}
+                  <Float rotationIntensity={1} floatIntensity={5}>
+                    <Mask21 />
+                    <Glass08/>
+                    <GlovesLeft/>
+                    <Diamond/>
+                    <GlovesRight/>
+                    {/* <RightShoe/> */}
+                    <LeftShoe/>
+                  </Float>
+                  {/* <Cable start={mask} end={diamond}/> */}
+                  {/* <Men/> */}
                   {/* <HumanModel/> */}
                 </Stage>
                 {/* <Line points={[0, 1.4, 0, 0, -0.9, 0]} color="red" linewidth={1} /> */}
@@ -96,7 +123,7 @@ const DiamondComponent = () => {
                 
                 </CameraRig> */}
             {/* </Float> */}
-            <AccumulativeShadows
+            {/* <AccumulativeShadows
                 temporal
                 frames={100}
                 color="orange"
@@ -107,8 +134,8 @@ const DiamondComponent = () => {
                 scale={12}
                 position={[0, -0.5, 0]}>
                 <RandomizedLight amount={8} radius={10} ambient={0.5} intensity={1} position={[5, 5, -10]} bias={0.001} />
-            </AccumulativeShadows>
-            <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr" />
+            </AccumulativeShadows> */}
+            {/* <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr" /> */}
             {/* <OrbitControls autoRotate autoRotateSpeed={1}/> */}
             <OrbitControls/>
             {/* <EffectComposer>
@@ -117,10 +144,10 @@ const DiamondComponent = () => {
             </EffectComposer> */}
             <EffectComposer>
               {/* <Glitch delay={[1.5, 3.5]} duration={[0.1, 0.5]} strength={[0.2, 0.6]} /> */}
-              <Bloom luminanceThreshold={0.8} intensity={3} levels={9} mipmapBlur />              
-              {/* <Noise opacity={0.1} /> */}
-              {/* <DepthOfField target={[0, 0, -10]} focalLength={0.1} bokehScale={1} height={1000} /> */}
-              {/* <Vignette eskil={false} offset={.1} darkness={.1} /> */}
+              <Bloom luminanceThreshold={.1} intensity={1} levels={9} mipmapBlur />              
+              {/* <Noise opacity={10} /> */}
+              {/* <DepthOfField target={[0, 0, -10]} focalLength={0.1} bokehScale={1} height={1000} />
+              <Vignette eskil={false} offset={.1} darkness={.1} /> */}
             </EffectComposer>
             {/* <EffectComposer>
                 <Bloom luminanceThreshold={1} intensity={2} levels={9} mipmapBlur />

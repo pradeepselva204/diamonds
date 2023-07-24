@@ -7,8 +7,8 @@ const Data = [
               rotation:[0, 0, 0.715],
               factor: 0.75 + Math.random() * 2,
               direction: Math.random() < 0.5 ? -1 : 1,
-              size:0.4,
-              scale:0.4
+              size:0.1,
+              scale:0.1
           }, 
           {// The Middle right
             position:[0.5, -.2, 1],
@@ -76,6 +76,7 @@ const Data = [
             }
       ]
     },
+
     {
         bg:"salmon",    
         data:[

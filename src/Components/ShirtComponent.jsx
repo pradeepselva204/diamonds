@@ -17,7 +17,7 @@ import {
   AsciiRenderer,
   Line
 } from '@react-three/drei'
-import { Gradient } from '../../public/lib/Gradient'
+// import { Gradient } from '../../public/lib/Gradient'
 import { EffectComposer, Bloom, DepthOfField, Glitch, Noise, Vignette } from '@react-three/postprocessing'
 
 import {useParams} from 'react-router-dom';
@@ -40,7 +40,9 @@ const ShirtComponent = () => {
             <spotLight position={[5, 5, -10]} angle={0.15} penumbra={1} />
             <pointLight position={[-10, -10, -10]} />          
                 <Stage intensity={0.5} environment="city" shadows={{ type: 'accumulative', bias: -0.001 }} adjustCamera={false}>
-                  <ShirtModel/>
+                  {/* <Float floatIntensity={.2}  rotationIntensity={1.5} speed={4}> */}
+                    <ShirtModel/>
+                  {/* </Float> */}
                 </Stage>
         
             <AccumulativeShadows
